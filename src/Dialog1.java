@@ -74,7 +74,7 @@ public class Dialog1 extends JDialog {
 
         String sample1 = textArea1.getText();
 
-        Security.addProvider(new BouncyCastleProvider());
+
 
 
         try {
@@ -117,8 +117,35 @@ public class Dialog1 extends JDialog {
 
             int i;
             while ((i=fr.read()) != -1){
+
+
                 System.out.print((char) i);
             }
+
+
+
+//            File file = new File("myFile");
+            byte[] fileData = new byte[(int) file.length()];
+            DataInputStream dis = new DataInputStream(new FileInputStream(file));
+            dis.readFully(fileData);
+
+            MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("SHA256");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+            String result = byteToHexString(md.digest(fileData));
+
+            formattedTextField1.setText(result);
+
+            System.out.println("Evo SHA256 hasha fajla: " + result);
+
+
+            dis.close();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,9 +158,6 @@ public class Dialog1 extends JDialog {
     }
 
     public static void main(String[] args) {
-//        Dialog1 dialog = new Dialog1();
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
+
     }
 }
