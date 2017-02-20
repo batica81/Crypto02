@@ -4,5 +4,10 @@ public class Main {
 
         System.out.println("Hello World!");
 
+        Dialog1 dialog = new Dialog1();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+
     }
 }
