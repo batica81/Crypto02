@@ -1,1 +1,1 @@
-copy out\artifacts\Crypto02_jar\*.* dist\
+copy /Y out\artifacts\Crypto02_jar\*.* dist\

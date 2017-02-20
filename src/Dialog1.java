@@ -1,18 +1,9 @@
-import com.sun.crypto.provider.SunJCE;
-import org.bouncycastle.jcajce.util.MessageDigestUtils;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import sun.security.jca.JCAUtil;
-import sun.security.krb5.internal.crypto.Aes256;
+
 
 import javax.swing.*;
 import java.awt.event.*;
-
-import sun.security.*;
-
 import java.io.*;
 import java.security.*;
-import javax.crypto.*;
-
 
 
 public class Dialog1 extends JDialog {
@@ -70,32 +61,24 @@ public class Dialog1 extends JDialog {
 
 
     private void onOK() {
-        // add your code here
 
         String sample1 = textArea1.getText();
 
-
-
-
         try {
             MessageDigest md = MessageDigest.getInstance("SHA256");
-
             String result = byteToHexString(md.digest((sample1).getBytes()));
-
             System.out.println("Evo SHA256 hasha: " + result);
-
             formattedTextField1.setText(result);
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
-
 
         //dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
+
         System.out.println("You clicked CANCEL");
         dispose();
     }
@@ -105,26 +88,8 @@ public class Dialog1 extends JDialog {
         int returnVal = fc.showOpenDialog(contentPane);
         File file = fc.getSelectedFile();
 
-        FileReader fr = null;
-        try {
-            fr = new FileReader(file);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
         try {
 
-            int i;
-            while ((i=fr.read()) != -1){
-
-
-                System.out.print((char) i);
-            }
-
-
-
-//            File file = new File("myFile");
             byte[] fileData = new byte[(int) file.length()];
             DataInputStream dis = new DataInputStream(new FileInputStream(file));
             dis.readFully(fileData);
@@ -142,18 +107,11 @@ public class Dialog1 extends JDialog {
 
             System.out.println("Evo SHA256 hasha fajla: " + result);
 
-
             dis.close();
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
 
     }
 
