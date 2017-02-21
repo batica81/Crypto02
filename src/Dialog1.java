@@ -24,7 +24,21 @@ public class Dialog1 extends JDialog {
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                try {
+                    onOK();
+                } catch (InvalidKeyException e1) {
+                    e1.printStackTrace();
+                } catch (BadPaddingException e1) {
+                    e1.printStackTrace();
+                } catch (NoSuchAlgorithmException e1) {
+                    e1.printStackTrace();
+                } catch (IllegalBlockSizeException e1) {
+                    e1.printStackTrace();
+                } catch (NoSuchPaddingException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -112,8 +126,6 @@ public class Dialog1 extends JDialog {
         radniFajl.setPassword(lozinkaPasswordField.getText());
         radniFajl.setEncryptedFileContents();
 
-//        System.out.println(ByteToHex.byteToHexString(radniFajl.getEncryptedFileContents()));
-
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(radniFajl.getOriginalFileName() + ".enc");
@@ -122,14 +134,21 @@ public class Dialog1 extends JDialog {
         }
         fos.write(radniFajl.getEncryptedFileContents());
         fos.close();
-
     }
 
-    private void onOK() {
+    private void onOK() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException {
         // DEKRIPTUJ
 
+        radniFajl.setPassword(lozinkaPasswordField.getText());
+        radniFajl.setPlaintextFileContents();
 
-        radniFajl.getHashedPassword();
-
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(radniFajl.getOriginalFileName() + ".dec");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        fos.write(radniFajl.getPlaintextFileContents());
+        fos.close();
     }
 }

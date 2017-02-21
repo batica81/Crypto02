@@ -1,4 +1,4 @@
-Treci deo domaceg zadatka za TZRM
+Treći deo domaćeg zadatka iz TZRM
 -----
-* Aplikacija vrisi enkripciju/dekripciju fajla
+* Aplikacija vrši enkripciju/dekripciju fajla
 * Koristi se algoritam AES

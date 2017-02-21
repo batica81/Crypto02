@@ -14,4 +14,12 @@ public class Encryptor {
         aes.init(Cipher.ENCRYPT_MODE, k);
         return aes.doFinal(plaintext);
     }
+
+    public byte [] decrypt(byte[] key, byte[] cyphertext) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
+        Cipher aes = Cipher.getInstance("AES");
+        SecretKeySpec k = new SecretKeySpec(key,"AES");
+        aes.init(Cipher.DECRYPT_MODE, k);
+        return aes.doFinal(cyphertext);
+    }
 }

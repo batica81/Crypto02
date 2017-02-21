@@ -10,62 +10,43 @@ public class Fajl {
 
     private byte[] originalFileContents;
     private byte[] encryptedFileContents;
+    private byte[] plaintextFileContents;
     private String originalFileName;
-    private String encryptedFileName;
     private String password;
     private byte[] hashedPassword;
+
 
     public Fajl(byte[] originalFileContents, String originalFileName) {
         this.originalFileContents = originalFileContents;
         this.originalFileName = originalFileName;
     }
 
+    public byte[] getPlaintextFileContents() {
+        return plaintextFileContents;
+    }
 
+    public void setPlaintextFileContents() throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+
+        Encryptor en = new Encryptor();
+        this.plaintextFileContents = en.decrypt(getHashedPassword(),getOriginalFileContents());
+    }
 
     public byte[] getOriginalFileContents() {
         return originalFileContents;
-    }
-
-    public void setOriginalFileContents(byte[] originalFileContents) {
-        this.originalFileContents = originalFileContents;
     }
 
     public byte[] getEncryptedFileContents() {
         return encryptedFileContents;
     }
 
-
-
     public void setEncryptedFileContents() throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
 
         Encryptor en = new Encryptor();
-
-
         this.encryptedFileContents = en.encrypt(getHashedPassword(),getOriginalFileContents());
     }
 
-
-
-
-
     public String getOriginalFileName() {
         return originalFileName;
-    }
-
-    public void setOriginalFileName(String originalFileName) {
-        this.originalFileName = originalFileName;
-    }
-
-    public String getEncryptedFileName() {
-        return encryptedFileName;
-    }
-
-    public void setEncryptedFileName(String encryptedFileName) {
-        this.encryptedFileName = encryptedFileName;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -74,7 +55,6 @@ public class Fajl {
     }
 
     public byte[] getHashedPassword() {
-        System.out.println(ByteToHex.byteToHexString(hashedPassword));
         return hashedPassword;
     }
 
