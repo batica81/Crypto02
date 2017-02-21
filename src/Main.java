@@ -9,7 +9,7 @@ public class Main {
 
 
         Security.addProvider(new BouncyCastleProvider());
-        System.out.println("Hello World!");
+        System.out.println("Initializing...");
 
         Dialog1 dialog = new Dialog1();
         dialog.pack();

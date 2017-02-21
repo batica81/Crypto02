@@ -1,10 +1,8 @@
 
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.security.*;
-
 
 public class Dialog1 extends JDialog {
     private JPanel contentPane;
@@ -67,15 +65,13 @@ public class Dialog1 extends JDialog {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA256");
             String result = byteToHexString(md.digest((sample1).getBytes()));
-            System.out.println("Evo SHA256 hasha: " + result);
             formattedTextField1.setText(result);
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        //dispose();
-    }
+     }
 
     private void onCancel() {
 
@@ -84,11 +80,11 @@ public class Dialog1 extends JDialog {
     }
 
     private void onOpen(){
-        JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(contentPane);
-        File file = fc.getSelectedFile();
-
         try {
+
+            JFileChooser fc = new JFileChooser();
+            fc.showOpenDialog(contentPane);
+            File file = fc.getSelectedFile();
 
             byte[] fileData = new byte[(int) file.length()];
             DataInputStream dis = new DataInputStream(new FileInputStream(file));
@@ -102,20 +98,11 @@ public class Dialog1 extends JDialog {
             }
 
             String result = byteToHexString(md.digest(fileData));
-
             formattedTextField1.setText(result);
-
-            System.out.println("Evo SHA256 hasha fajla: " + result);
-
             dis.close();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static void main(String[] args) {
-
     }
 }
