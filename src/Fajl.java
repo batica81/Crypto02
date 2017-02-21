@@ -25,7 +25,7 @@ public class Fajl {
         return plaintextFileContents;
     }
 
-    public void setPlaintextFileContents() throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+    public void setPlaintextFileContents() throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
 
         Encryptor en = new Encryptor();
         this.plaintextFileContents = en.decrypt(getHashedPassword(),getOriginalFileContents());
@@ -39,7 +39,7 @@ public class Fajl {
         return encryptedFileContents;
     }
 
-    public void setEncryptedFileContents() throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+    public void setEncryptedFileContents() throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
 
         Encryptor en = new Encryptor();
         this.encryptedFileContents = en.encrypt(getHashedPassword(),getOriginalFileContents());

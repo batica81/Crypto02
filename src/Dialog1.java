@@ -38,6 +38,8 @@ public class Dialog1 extends JDialog {
                     e1.printStackTrace();
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                } catch (InvalidAlgorithmParameterException e1) {
+                    e1.printStackTrace();
                 }
             }
         });
@@ -67,6 +69,8 @@ public class Dialog1 extends JDialog {
                 } catch (NoSuchPaddingException e1) {
                     e1.printStackTrace();
                 } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InvalidAlgorithmParameterException e1) {
                     e1.printStackTrace();
                 }
             }
@@ -121,7 +125,7 @@ public class Dialog1 extends JDialog {
         radniFajl = fileLoader();
     }
 
-    private void OnenkriptujButton() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException {
+    private void OnenkriptujButton() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
 
         radniFajl.setPassword(lozinkaPasswordField.getText());
         radniFajl.setEncryptedFileContents();
@@ -136,7 +140,7 @@ public class Dialog1 extends JDialog {
         fos.close();
     }
 
-    private void onOK() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException {
+    private void onOK() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
         // DEKRIPTUJ
 
         radniFajl.setPassword(lozinkaPasswordField.getText());
