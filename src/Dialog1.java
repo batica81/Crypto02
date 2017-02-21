@@ -1,4 +1,7 @@
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
@@ -11,6 +14,8 @@ public class Dialog1 extends JDialog {
     private JTextArea textArea1;
     private JButton openFileButton;
     private JFormattedTextField formattedTextField1;
+    private JPasswordField lozinkaPasswordField;
+    private JButton enkriptujButton;
 
     public Dialog1() {
         setContentPane(contentPane);
@@ -33,6 +38,26 @@ public class Dialog1 extends JDialog {
             public void actionPerformed(ActionEvent e) { onOpen(); }
         });
 
+        enkriptujButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    OnenkriptujButton();
+                } catch (InvalidKeyException e1) {
+                    e1.printStackTrace();
+                } catch (BadPaddingException e1) {
+                    e1.printStackTrace();
+                } catch (NoSuchAlgorithmException e1) {
+                    e1.printStackTrace();
+                } catch (IllegalBlockSizeException e1) {
+                    e1.printStackTrace();
+                } catch (NoSuchPaddingException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -49,29 +74,7 @@ public class Dialog1 extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public String byteToHexString(byte[] input) {
-        String output = "";
-        for (int i=0; i<input.length; ++i) {
-            output += String.format("%02X", input[i]);
-        }
-        return output;
-    }
-
-
-    private void onOK() {
-
-        String sample1 = textArea1.getText();
-
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA256");
-            String result = byteToHexString(md.digest((sample1).getBytes()));
-            formattedTextField1.setText(result);
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-     }
+    private Fajl radniFajl = null;
 
     private void onCancel() {
 
@@ -79,30 +82,54 @@ public class Dialog1 extends JDialog {
         dispose();
     }
 
-    private void onOpen(){
+    private Fajl fileLoader(){
         try {
 
             JFileChooser fc = new JFileChooser();
             fc.showOpenDialog(contentPane);
             File file = fc.getSelectedFile();
+            String filename = file.getName();
 
             byte[] fileData = new byte[(int) file.length()];
             DataInputStream dis = new DataInputStream(new FileInputStream(file));
             dis.readFully(fileData);
-
-            MessageDigest md = null;
-            try {
-                md = MessageDigest.getInstance("SHA256");
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-
-            String result = byteToHexString(md.digest(fileData));
-            formattedTextField1.setText(result);
+            Fajl tempFajl = new Fajl(fileData, filename);
             dis.close();
+            return tempFajl;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    private void onOpen(){
+        radniFajl = fileLoader();
+    }
+
+    private void OnenkriptujButton() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException {
+
+        radniFajl.setPassword(lozinkaPasswordField.getText());
+        radniFajl.setEncryptedFileContents();
+
+//        System.out.println(ByteToHex.byteToHexString(radniFajl.getEncryptedFileContents()));
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(radniFajl.getOriginalFileName() + ".enc");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        fos.write(radniFajl.getEncryptedFileContents());
+        fos.close();
+
+    }
+
+    private void onOK() {
+        // DEKRIPTUJ
+
+
+        radniFajl.getHashedPassword();
+
     }
 }
