@@ -96,7 +96,7 @@ public class Dialog1 extends JDialog {
 
     private void onCancel() {
 
-        System.out.println("You clicked CANCEL");
+        System.out.println("Izlaz iz programa...");
         dispose();
     }
 
@@ -138,6 +138,7 @@ public class Dialog1 extends JDialog {
         }
         fos.write(radniFajl.getEncryptedFileContents());
         fos.close();
+        System.out.println("Fajl je enkriptovan.");
     }
 
     private void onOK() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
@@ -154,5 +155,6 @@ public class Dialog1 extends JDialog {
         }
         fos.write(radniFajl.getPlaintextFileContents());
         fos.close();
+        System.out.println("Fajl je dekriptovan.");
     }
 }
