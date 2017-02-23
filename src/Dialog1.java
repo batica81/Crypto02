@@ -3,6 +3,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.security.*;
@@ -16,6 +17,7 @@ public class Dialog1 extends JDialog {
     private JFormattedTextField formattedTextField1;
     private JPasswordField lozinkaPasswordField;
     private JButton enkriptujButton;
+    private JLabel resultLabel;
 
     public Dialog1() {
         setContentPane(contentPane);
@@ -23,12 +25,15 @@ public class Dialog1 extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         buttonOK.addActionListener(new ActionListener() {
+            //dekriptuj
             public void actionPerformed(ActionEvent e) {
                 try {
                     onOK();
                 } catch (InvalidKeyException e1) {
                     e1.printStackTrace();
                 } catch (BadPaddingException e1) {
+                    resultLabel.setText("Pogrešna lozinka");
+                    System.out.println("Pogrešna lozinka.");
                     e1.printStackTrace();
                 } catch (NoSuchAlgorithmException e1) {
                     e1.printStackTrace();
@@ -113,6 +118,7 @@ public class Dialog1 extends JDialog {
             dis.readFully(fileData);
             Fajl tempFajl = new Fajl(fileData, filename);
             dis.close();
+            resultLabel.setText("Fajl je učitan");
             return tempFajl;
 
         } catch (Exception e) {
@@ -139,6 +145,7 @@ public class Dialog1 extends JDialog {
         fos.write(radniFajl.getEncryptedFileContents());
         fos.close();
         System.out.println("Fajl je enkriptovan.");
+        resultLabel.setText("Fajl je enkriptovan");
     }
 
     private void onOK() throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
@@ -156,5 +163,6 @@ public class Dialog1 extends JDialog {
         fos.write(radniFajl.getPlaintextFileContents());
         fos.close();
         System.out.println("Fajl je dekriptovan.");
+        resultLabel.setText("Fajl je dekriptovan");
     }
 }
