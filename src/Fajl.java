@@ -23,19 +23,19 @@ public class Fajl {
     public Fajl(byte[] originalFileContents, String originalFileName) {
         this.originalFileContents = originalFileContents;
         this.originalFileName = originalFileName;
-        setEncIV();
+//        setEncIV();
     }
-
-    public byte[] getEncIV() {
-        return encIV;
-    }
-
-    public void setEncIV() {
-        SecureRandom sr = new SecureRandom();
-        byte[] values = new byte[16];
-        sr.nextBytes(values);
-        this.encIV = values;
-    }
+//
+//    public byte[] getEncIV() {
+//        return encIV;
+//    }
+//
+//    public void setEncIV() {
+//        SecureRandom sr = new SecureRandom();
+//        byte[] values = new byte[16];
+//        sr.nextBytes(values);
+//        this.encIV = values;
+//    }
 
     public byte[] getPlaintextFileContents() {
         return plaintextFileContents;
@@ -74,20 +74,20 @@ public class Fajl {
 
     public void setPassword(String password) {
         this.password = password;
-        setHashedPassword();
+//        setHashedPassword();
     }
 
     public byte[] getHashedPassword() {
         return hashedPassword;
     }
 
-    private void setHashedPassword() {
-        MessageDigest md = null;
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        this.hashedPassword =  (md.digest(password.getBytes()));
-    }
+//    private void setHashedPassword() {
+//        MessageDigest md = null;
+//        try {
+//            md = MessageDigest.getInstance("MD5");
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        this.hashedPassword =  (md.digest(password.getBytes()));
+//    }
 }
